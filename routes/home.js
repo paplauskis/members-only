@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const asyncHandler = require('express-async-handler')
 const bcrypt = require('bcryptjs')
+const passport = require('passport')
 const { query, validationResult } = require('express-validator')
 const User = require('../models/userSchema')
 
@@ -10,10 +11,10 @@ router.get('/', function (req, res, next) {
 })
 
 router.get('/signup', function (req, res, next) {
-  res.render('form', { 
+  res.render('form', {
     title: 'Sign up',
     url: req.url,
-   })
+  })
 })
 
 router.post('/signup', [
@@ -51,7 +52,7 @@ router.post('/signup', [
     try {
       await user.save()
       res.redirect('/home')
-    } catch (err){
+    } catch (err) {
       console.log(err)
     }
   }),
@@ -63,5 +64,13 @@ router.get('/login', function (req, res, next) {
     url: req.url,
   })
 })
+
+router.post(
+  '/login',
+  passport.authenticate('local', {
+    successRedirect: '/home',
+    failureRedirect: '/home/login',
+  })
+)
 
 module.exports = router
