@@ -7,7 +7,7 @@ const { query, validationResult } = require('express-validator')
 const User = require('../models/userSchema')
 
 router.get('/', function (req, res, next) {
-  res.render('home', { title: 'Home Page' })
+  res.render('home', { title: 'Home Page', user: req.user })
 })
 
 router.get('/signup', function (req, res, next) {
