@@ -10,7 +10,10 @@ router.get('/', function (req, res, next) {
 })
 
 router.get('/signup', function (req, res, next) {
-  res.render('signup', { title: 'Sign up Page' })
+  res.render('form', { 
+    title: 'Sign up',
+    url: req.url,
+   })
 })
 
 router.post('/signup', [
@@ -22,16 +25,18 @@ router.post('/signup', [
     const errors = validationResult(req)
 
     if (req.body.password !== req.body.confirm_password) {
-      res.render('signup', {
-        title: 'Sign up Page',
+      res.render('form', {
+        title: 'Sign up',
+        url: req.url,
         errors: [{ msg: 'Passwords do not match' }],
       })
       return
     }
 
     if (!errors.isEmpty()) {
-      res.render('signup', {
-        title: 'Sign up Form',
+      res.render('form', {
+        title: 'Sign up',
+        url: req.url,
         errors: errors.array(),
       })
     }
@@ -51,5 +56,12 @@ router.post('/signup', [
     }
   }),
 ])
+
+router.get('/login', function (req, res, next) {
+  res.render('form', {
+    title: 'Log in',
+    url: req.url,
+  })
+})
 
 module.exports = router
