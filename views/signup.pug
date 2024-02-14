@@ -6,18 +6,23 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     div.center
-      h1= title
+      h1 #{title} Page
       form(method='POST')
         div.form
           label(for="username") Username
           input(type="text" id="username" name="username" required)
           label(for="password") Password
           input(type="password" id="password" name="password")
-          label(for="confirm_password") Confirm Password
-          input(type="password" id="confirm_password" name="confirm_password")
-          button(type="submit") Sign Up
-      p Already have an account? 
-        a(href="/home/login") Log in
+          if url === '/signup'
+            label(for="confirm_password") Confirm Password
+            input(type="password" id="confirm_password" name="confirm_password")
+          button(type="submit") #{url === '/signup' ? 'Sign up' : 'Log in'}
+      if url === '/signup'
+        p Already have an account? 
+          a(href="/home/login") Log in
+      else
+        p Don't have an account?
+          a(href="/home/signup") Sign up
       if errors
         for error in errors
           p.errors #{error.msg}
