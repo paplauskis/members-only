@@ -30,6 +30,7 @@ a {
   background-color: #1c1a2e;
   padding: 7px;
   border-radius: 10px;
+  text-decoration: none;
 }
 
 .log-in-out > a:hover {
