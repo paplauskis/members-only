@@ -52,6 +52,10 @@ a {
   margin: 0;
 }
 
+.center > h1 {
+  text-align: center;
+}
+
 .center > .errors {
   color: red;
   margin-top: 20px;
