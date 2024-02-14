@@ -8,7 +8,9 @@ html
     div.nav-bar 
       h2 Members Only 
       div.log-in-out
-        a(href='/home/signup') Sign Up
-        a(href='/home/login') Login
-        a(href='/home/logout') Logout
+        if user 
+          a(href='/home/logout') Logout
+        else 
+          a(href='/home/signup') Sign Up
+          a(href='/home/login') Login
     block content
