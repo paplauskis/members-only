@@ -5,6 +5,7 @@ const bcrypt = require('bcryptjs')
 const passport = require('passport')
 const { query, validationResult } = require('express-validator')
 const User = require('../models/userSchema')
+const Message = require('../models/messageSchema')
 
 router.get('/', function (req, res, next) {
   res.render('home', { title: 'Home Page', user: req.user })
@@ -116,10 +117,48 @@ router.post('/join-secret-club', [
       })
       return
     } else {
-      await User.findByIdAndUpdate(req.user._id, { member_status: 'Secret Club' })
+      await User.findByIdAndUpdate(req.user._id, {
+        member_status: 'Secret Club',
+      })
       res.redirect('/home')
     }
   }),
+])
+
+router.get('/new-message', function (req, res, next) {
+  res.render('message-form', {
+    title: 'New Message',
+  })
+})
+
+router.post('/new-message', [
+  query('title').trim().escape(),
+  query('message').trim().escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req)
+
+    const message = new Message({
+      title: req.body.title,
+      text: req.body.message,
+      author: req.user,
+      date_posted: new Date(),
+    })    
+
+    if (!errors.isEmpty()) {
+      res.render('message-form', {
+        title: 'New Message',
+        errors: errors.array(),
+      })
+    } else {
+      try {
+        await message.save()
+        res.redirect('/home')
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  })
 ])
 
 module.exports = router
