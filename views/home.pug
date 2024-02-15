@@ -1,0 +1,27 @@
+extends layout 
+
+block content 
+  if user
+    div.top-title 
+      h1= title
+  else
+    div.top-title
+      h1= title
+      h3 If you want to view the users and when the messages were posted, please sign up!
+  div.messages
+    for message in messages 
+      div.message
+        div.user-info
+          if user
+            p.author-name by: #{message.author.username}
+          else
+            p User
+          p.author-status #{message.author.member_status}
+          //- if message.author.admin === true
+          //-   p.admin
+          if user 
+            p.date-posted posted on: #{message.date_posted.toString().slice(4, 15)}
+        div.message-info
+          p.title-text #{message.title}
+          p.message-text #{message.text}
+
