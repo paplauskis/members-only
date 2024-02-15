@@ -44,14 +44,6 @@ router.post('/signup', [
       return
     }
 
-    if (!errors.isEmpty()) {
-      res.render('form', {
-        title: 'Sign up',
-        url: req.url,
-        errors: errors.array(),
-      })
-    }
-
     const hashedPassword = await bcrypt.hash(req.body.password, 10)
     const user = new User({
       username: req.body.username,
@@ -59,14 +51,23 @@ router.post('/signup', [
       member_status: 'Member',
       date_joined: new Date(),
     })
-    try {
-      await user.save()
-      req.logIn(user, function (err) {
-        if (err) return next(err)
-        res.redirect('/home')
+
+    if (!errors.isEmpty()) {
+      res.render('form', {
+        title: 'Sign up',
+        url: req.url,
+        errors: errors.array(),
       })
-    } catch (err) {
-      console.log(err)
+    } else {
+      try {
+        await user.save()
+        req.logIn(user, function (err) {
+          if (err) return next(err)
+          res.redirect('/home')
+        })
+      } catch (err) {
+        console.log(err)
+      }
     }
   }),
 ])
