@@ -23,8 +23,10 @@ block content
             p.date-posted posted on: #{message.date_posted.toString().slice(4, 15)}
           if message.author.admin === true
             div.admin-buttons
-              button(href= `/home/${message._id}/update`) Update message 
-              button(href= `/home/${message._id}/delete`) Delete message
+              form(action=`/home/${message._id}/update`, method="POST")
+                button(type="submit") Update message
+              form(action=`/home/${message._id}/delete`, method="POST")
+                button(type="submit") Delete message
         div.message-info
           p.title-text #{message.title}
           p.message-text #{message.text}
