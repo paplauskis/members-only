@@ -97,6 +97,15 @@ router.post(
   })
 )
 
+router.get('/logout', (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err)
+    }
+    res.redirect('/home')
+  })
+})
+
 router.get('/join-secret-club', function (req, res, next) {
   res.render('form', {
     title: 'Join Secret Club',
