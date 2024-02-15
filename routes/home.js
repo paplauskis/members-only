@@ -10,7 +10,9 @@ const Message = require('../models/messageSchema')
 router.get(
   '/',
   asyncHandler(async (req, res, next) => {
-    const messages = await Message.find({}).populate('author')
+    const messages = await Message.find({})
+      .sort({ date_posted: -1 })
+      .populate('author')
 
     res.render('home', {
       title: 'Home Page',
