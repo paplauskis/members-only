@@ -8,9 +8,11 @@ html
     div.nav-bar 
       h2 Members Only 
       div.log-in-out
+        if user.member_status === 'Member'
+          a(href='/home/join-secret-club') Join Secret Club
         if user 
           a(href='/home/logout') Logout
         else 
-          a(href='/home/signup') Sign Up
-          a(href='/home/login') Login
+          a(href='/home/signup') Sign up
+          a(href='/home/login') Log in
     block content
