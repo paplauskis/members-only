@@ -71,15 +71,20 @@ a {
   margin: 30px 0px 5px 0px;
 }
 
-.form input {
+.form input,
+.form textarea {
   background-color: transparent;
   border: 2px solid rgb(76, 151, 152);
   color: rgb(233, 233, 233);
-  height: 25px;
   font-size: 16px;
 }
 
-.form input:focus {
+.form input {
+  height: 25px;
+}
+
+.form input:focus,
+.form textarea:focus {
   outline: none;
 }
 
@@ -97,4 +102,9 @@ a {
   cursor: pointer;
   transition: 0.2s;
   background-color: #11101c;
+}
+
+.data {
+  /* need to delete later on */
+  color: wheat;
 }
