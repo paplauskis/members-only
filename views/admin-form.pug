@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    div.center
+      h1 #{title}
+      form(method='POST')
+        div.form
+          p Admins can delete and update messages
+          p Enter required password to become an admin
+          label(for="admin_password")
+          input(type="password" id="admin_password" name="admin_password" required)
+          button(type="submit") Submit
+      if errors 
+        for error in errors 
+          p.errors #{error.msg}
