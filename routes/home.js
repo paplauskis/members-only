@@ -180,7 +180,7 @@ router.post('/admin-form', [
         console.log(err)
       }
     }
-  })
+  }),
 ])
 
 router.get('/new-message', function (req, res, next) {
@@ -218,5 +218,18 @@ router.post('/new-message', [
     }
   }),
 ])
+
+router.post(
+  '/:id/delete',
+  asyncHandler(async (req, res, next) => {
+    try {
+      await Message.findByIdAndDelete(req.params.id)
+      res.redirect('/home')
+    } catch (err) {
+      console.log(err)
+      res.status(500).send('Internal server error')
+    }
+  })
+)
 
 module.exports = router
