@@ -17,10 +17,14 @@ block content
           else
             p User
           p.author-status #{message.author.member_status}
-          //- if message.author.admin === true
-          //-   p.admin
+          if message.author.admin === true
+            p.admin admin
           if user 
             p.date-posted posted on: #{message.date_posted.toString().slice(4, 15)}
+          if message.author.admin === true
+            div.admin-buttons
+              button(href= `/home/${message._id}/update`) Update message 
+              button(href= `/home/${message._id}/delete`) Delete message
         div.message-info
           p.title-text #{message.title}
           p.message-text #{message.text}
