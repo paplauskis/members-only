@@ -30,38 +30,38 @@ app.set('view engine', 'pug')
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const user = await User.findOne({ username: username });
+      const user = await User.findOne({ username: username })
       if (!user) {
-        return done(null, false, { message: "Incorrect username" });
+        return done(null, false, { message: 'Incorrect username' })
       }
-      const match = await bcrypt.compare(password, user.password);
+      const match = await bcrypt.compare(password, user.password)
       if (!match) {
-        return done(null, false, { message: "Incorrect password" });
+        return done(null, false, { message: 'Incorrect password' })
       }
-      return done(null, user);
-    } catch(err) {
-      return done(err);
+      return done(null, user)
+    } catch (err) {
+      return done(err)
     }
   })
-);
+)
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
-});
+  done(null, user.id)
+})
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
-    done(null, user);
-  } catch(err) {
-    done(err);
-  };
-});
+    const user = await User.findById(id)
+    done(null, user)
+  } catch (err) {
+    done(err)
+  }
+})
 
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(express.urlencoded({ extended: false }));
+app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }))
+app.use(passport.initialize())
+app.use(passport.session())
+app.use(express.urlencoded({ extended: false }))
 
 app.use(logger('dev'))
 app.use(express.json())
