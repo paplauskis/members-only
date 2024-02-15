@@ -1,0 +1,19 @@
+doctype html
+html
+  head
+    title= title
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    div.center
+      h1 #{title}
+      form(method='POST')
+        div.form
+          label(for="title") Title 
+          input(type="text" id="title" name="title" required)
+          label(for="message") Message 
+          textarea(name="message" id="message" cols="30" rows="10" required) 
+          button(type="submit") Post
+      if errors 
+        for error in errors
+          p.errors #{error.msg}
