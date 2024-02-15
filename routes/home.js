@@ -6,6 +6,7 @@ const passport = require('passport')
 const { query, validationResult } = require('express-validator')
 const User = require('../models/userSchema')
 const Message = require('../models/messageSchema')
+require('dotenv').config()
 
 router.get(
   '/',
@@ -143,6 +144,43 @@ router.post('/join-secret-club', [
       res.redirect('/home')
     }
   }),
+])
+
+router.get('/admin-form', function (req, res, next) {
+  res.render('admin-form', {
+    title: 'Become admin',
+  })
+})
+
+router.post('/admin-form', [
+  query('admin_password').trim().escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req)
+
+    if (req.body.admin_password !== process.env.ADMIN_PASSWORD) {
+      res.render('admin-form', {
+        title: 'Become admin',
+        errors: [{ msg: 'Incorrect password' }],
+      })
+      return
+    }
+
+    if (!errors.isEmpty()) {
+      res.render('admin-form', {
+        title: 'Become admin',
+        errors: errors.array(),
+      })
+      return
+    } else {
+      try {
+        await User.findByIdAndUpdate(req.user._id, { admin: true })
+        res.redirect('/home')
+      } catch (err) {
+        console.log(err)
+      }
+    }
+  })
 ])
 
 router.get('/new-message', function (req, res, next) {
