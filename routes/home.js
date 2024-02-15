@@ -61,7 +61,10 @@ router.post('/signup', [
     })
     try {
       await user.save()
-      res.redirect('/home')
+      req.logIn(user, function (err) {
+        if (err) return next(err)
+        res.redirect('/home')
+      })
     } catch (err) {
       console.log(err)
     }
