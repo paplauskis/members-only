@@ -103,7 +103,7 @@ h3 {
   gap: 5px;
 }
 
-.admin-buttons > button {
+.admin-buttons button {
   background-color: transparent;
   border: 1px solid rgb(76, 151, 152);
   font-size: 12px;
@@ -112,7 +112,7 @@ h3 {
   transition: 0.3s;
 }
 
-.admin-buttons > button:hover {
+.admin-buttons button:hover {
   background-color: rgb(76, 151, 152);
   color: black;
 }
