@@ -7,9 +7,18 @@ const { query, validationResult } = require('express-validator')
 const User = require('../models/userSchema')
 const Message = require('../models/messageSchema')
 
-router.get('/', function (req, res, next) {
-  res.render('home', { title: 'Home Page', user: req.user })
-})
+router.get(
+  '/',
+  asyncHandler(async (req, res, next) => {
+    const messages = await Message.find({}).populate('author')
+
+    res.render('home', {
+      title: 'Home Page',
+      user: req.user,
+      messages: messages,
+    })
+  })
+)
 
 router.get('/signup', function (req, res, next) {
   res.render('form', {
@@ -143,7 +152,7 @@ router.post('/new-message', [
       text: req.body.message,
       author: req.user,
       date_posted: new Date(),
-    })    
+    })
 
     if (!errors.isEmpty()) {
       res.render('message-form', {
@@ -158,7 +167,7 @@ router.post('/new-message', [
         console.log(err)
       }
     }
-  })
+  }),
 ])
 
 module.exports = router
