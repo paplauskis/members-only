@@ -125,6 +125,7 @@ h3 {
 .form {
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .form label {
