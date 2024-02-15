@@ -6,21 +6,29 @@ html
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
     div.center
-      h1 #{title} Page
+      h1 #{title}
       form(method='POST')
         div.form
-          label(for="username") Username
-          input(type="text" id="username" name="username" required)
-          label(for="password") Password
-          input(type="password" id="password" name="password")
+          if url === '/join-secret-club'
+            p Hint: what's tall when young and short when old?
+            label(for="secret-word") What's the secret word?
+            input(type="text" id="secret-word" name="secret_word" required)
+            button(type="submit") Join
+          if url === '/signup' || url === '/login'  
+            label(for="username") Username
+            input(type="text" id="username" name="username" required)
+            label(for="password") Password
+            input(type="password" id="password" name="password" required)
+          if url === '/login'  
+            button(type="submit") #{url === '/signup' ? 'Sign up' : 'Log in'}
           if url === '/signup'
             label(for="confirm_password") Confirm Password
-            input(type="password" id="confirm_password" name="confirm_password")
-          button(type="submit") #{url === '/signup' ? 'Sign up' : 'Log in'}
+            input(type="password" id="confirm_password" name="confirm_password" required)
+            button(type="submit") #{url === '/signup' ? 'Sign up' : 'Log in'}
       if url === '/signup'
         p Already have an account? 
           a(href="/home/login") Log in
-      else
+      if url === '/login'
         p Don't have an account?
           a(href="/home/signup") Sign up
       if errors
