@@ -25,13 +25,13 @@ router.post('/signup', [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req)
     const findUser = await User.findOne({ username: req.body.username })
-    
+
     if (findUser) {
       res.render('form', {
-          title: 'Sign up',
-          url: req.url,
-          errors: [{ msg: 'Username is already taken' }],
-        })
+        title: 'Sign up',
+        url: req.url,
+        errors: [{ msg: 'Username is already taken' }],
+      })
       return
     }
 
@@ -85,5 +85,40 @@ router.post(
     failureRedirect: '/home/login',
   })
 )
+
+router.get('/join-secret-club', function (req, res, next) {
+  res.render('form', {
+    title: 'Join Secret Club',
+    url: req.url,
+  })
+})
+
+router.post('/join-secret-club', [
+  query('secret_word').trim().escape().toLowerCase(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req)
+    console.log(req.user)
+    if (req.body.secret_word !== 'candle') {
+      res.render('form', {
+        title: 'Join Secret Club',
+        url: req.url,
+        errors: [{ msg: 'Incorrect secret word' }],
+      })
+    }
+
+    if (!errors.isEmpty()) {
+      res.render('form', {
+        title: 'Join Secret Club',
+        url: req.url,
+        errors: errors.array(),
+      })
+      return
+    } else {
+      await User.findByIdAndUpdate(req.user._id, { member_status: 'Secret Club' })
+      res.redirect('/home')
+    }
+  }),
+])
 
 module.exports = router
