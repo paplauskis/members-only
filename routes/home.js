@@ -24,6 +24,16 @@ router.post('/signup', [
 
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req)
+    const findUser = await User.findOne({ username: req.body.username })
+    
+    if (findUser) {
+      res.render('form', {
+          title: 'Sign up',
+          url: req.url,
+          errors: [{ msg: 'Username is already taken' }],
+        })
+      return
+    }
 
     if (req.body.password !== req.body.confirm_password) {
       res.render('form', {
