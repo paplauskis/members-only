@@ -11,6 +11,8 @@ html
         if user 
           if user.member_status === 'Member'
             a(href='/home/join-secret-club') Join Secret Club
+          if user.admin === false 
+            a(href="/home/admin-form") Become Admin
           a(href='/home/new-message') New Message
           a(href='/home/logout') Logout
         else 
