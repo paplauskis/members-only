@@ -98,12 +98,8 @@ h3 {
   width: 30ch;
 }
 
-.admin-buttons {
-  display: flex;
-  gap: 5px;
-}
-
-.admin-buttons button {
+.delete-button {
+  margin-top: 10px;
   background-color: transparent;
   border: 1px solid rgb(76, 151, 152);
   font-size: 12px;
@@ -112,7 +108,7 @@ h3 {
   transition: 0.3s;
 }
 
-.admin-buttons button:hover {
+.delete-button:hover {
   background-color: rgb(76, 151, 152);
   color: black;
 }
