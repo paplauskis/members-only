@@ -122,7 +122,7 @@ router.post('/join-secret-club', [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req)
     console.log(req.user)
-    if (req.body.secret_word !== 'candle') {
+    if (req.body.secret_word !== process.env.SECRET_CLUB_PASSWORD) {
       res.render('form', {
         title: 'Join Secret Club',
         url: req.url,
