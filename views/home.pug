@@ -21,9 +21,10 @@ block content
             p.admin admin
           if user 
             p.date-posted posted on: #{message.date_posted.toString().slice(4, 15)}
-          if message.author.admin === true
-            form(action=`/home/${message._id}/delete`, method="POST")
-              button.delete-button(type="submit") Delete message
+          if user
+            if user.admin === true
+              form(action=`/home/${message._id}/delete`, method="POST")
+                button.delete-button(type="submit") Delete message
         div.message-info
           p.title-text #{message.title}
           p.message-text #{message.text}
