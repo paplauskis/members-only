@@ -8,6 +8,7 @@ const session = require('express-session')
 const passport = require('passport')
 const LocalStrategy = require('passport-local').Strategy
 const bcrypt = require('bcryptjs')
+const flash = require('connect-flash')
 require('dotenv').config()
 
 const indexRouter = require('./routes/index')
@@ -61,6 +62,7 @@ passport.deserializeUser(async (id, done) => {
 app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(flash())
 app.use(express.urlencoded({ extended: false }))
 
 app.use(logger('dev'))
