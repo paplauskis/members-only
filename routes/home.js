@@ -89,6 +89,7 @@ router.get('/login', function (req, res, next) {
   res.render('form', {
     title: 'Log in',
     url: req.url,
+    errorMessage: req.flash('error'),
   })
 })
 
@@ -97,6 +98,7 @@ router.post(
   passport.authenticate('local', {
     successRedirect: '/home',
     failureRedirect: '/home/login',
+    failureFlash: true,
   })
 )
 
