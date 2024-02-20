@@ -34,4 +34,5 @@ html
       if errors
         for error in errors
           p.errors #{error.msg}
-      
+      if errorMessage 
+        p.errors #{errorMessage}
